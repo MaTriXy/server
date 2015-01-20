@@ -1,0 +1,5 @@
+copyright: Copyright © 2014 | Broadr Inc
+name: Broadr
+tag: Virtual message boards, everywhere.
+app_download_url: http://goo.gl/JsASPW
+default_index_description: An app(only for Android is available) to broadcast a text message to other mobiles in the sender's location (if the sender is in Bangalore the message will go to all the app users in Bangalore). This app tries to provide a virtual message/notice board in every location. Users can comment on a received message. The messages and comments contain information about sender's location and sent time except the details about the user like name or email thus keeping the users anonymous. Eventually users will receive the messages wherever they are currently.

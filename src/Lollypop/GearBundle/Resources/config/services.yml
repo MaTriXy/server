@@ -1,0 +1,37 @@
+parameters:
+    lollypop_gear.redis_connection.class: Lollypop\GearBundle\Services\RedisConnection
+    lollypop_gear.message_consumer.class: Lollypop\GearBundle\Services\MessageConsumer
+    lollypop_gear.gcm.http_pusher.class: Lollypop\GearBundle\Services\GCMHTTPPusher
+    lollypop_gear.gcm_listener.class: Lollypop\GearBundle\EventListener\GCMMessageListener
+    lollypop.gcm_http_pusher.class: Lollypop\GearBundle\Services\Pusher
+    lollypop.gcm_message_dealer.class: Lollypop\GearBundle\Services\MessageDealer
+    ack_channel: %ack_channel%
+    google_api_key: %google_api_key%
+    ca_bundle_crt: "%kernel.root_dir%/config/ca-bundle.crt"
+
+services:
+    redis.connection:
+        class: "%lollypop_gear.redis_connection.class%"
+        arguments: ['@logger']
+    message.consumer:
+        class: "%lollypop_gear.message_consumer.class%"
+        arguments: ['@event_dispatcher', '@logger', '%ack_channel%']
+    gcm.http_message.pusher:
+        class: "%lollypop_gear.gcm.http_pusher.class%"
+        arguments: ['@event_dispatcher', '@doctrine', '@logger', '@pusher']
+    pusher:
+        class: "%lollypop.gcm_http_pusher.class%"
+        arguments: ['@doctrine', '@logger', '%google_api_key%', '%ca_bundle_crt%']
+    message.delear:
+        class: "%lollypop.gcm_message_dealer.class%"
+        arguments: ['@fos_user.user_manager', '@redis.connection', '@doctrine', '@logger', '@gearman']
+    gcm.listener:
+        class: "%lollypop_gear.gcm_listener.class%"
+        arguments: ['@doctrine', '@logger', '@message.delear']
+        tags:
+          - { name: kernel.event_listener, event: gcm_ack.received, method: onGCMAckReceived }
+          - { name: kernel.event_listener, event: gcm_nack.received, method: onGCMNackReceived }
+          - { name: kernel.event_listener, event: gcm_msg.received, method: onGCMMsgReceived }
+          - { name: kernel.event_listener, event: gcm_msg.pushed, method: onGCMMsgPushed }
+          - { name: kernel.event_listener, event: gcm_receipt.received, method: onGCMReceiptReceived }
+          - { name: kernel.event_listener, event: gcm_control_msg.received, method: onGCMControlMessageReceived }    

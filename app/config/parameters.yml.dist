@@ -1,0 +1,23 @@
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     symfony
+    database_user:     root
+    database_password: ~
+
+    mailer_transport:  smtp
+    mailer_user:   abbiya
+    mailer_password:   password
+    mailer_host:       !
+
+    locale:            en
+    secret:            ThisTokenIsNotSoSecretChangeIt
+
+    debug_toolbar:          false
+    debug_redirects:        false
+    use_assetic_controller: false
+
+    ack_channel: ack_channel
+    google_api_key: API_KEY 
+    google_url_shortener_endpoint: https://www.googleapis.com/urlshortener/v1/url

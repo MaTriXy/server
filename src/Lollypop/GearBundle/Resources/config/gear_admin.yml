@@ -1,0 +1,11 @@
+services:
+    sonata.admin.post:
+        class: Lollypop\GearBundle\Admin\GearAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Gear Admin" }
+        arguments:
+            - ~
+            - Lollypop\GearBundle\Entity\User
+            - ~
+        calls:
+            - [ setTranslationDomain, [LollypopGearBundle]]

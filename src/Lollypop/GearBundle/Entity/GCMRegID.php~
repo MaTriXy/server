@@ -1,0 +1,158 @@
+<?php
+
+namespace Lollypop\GearBundle\Entity;
+
+use Doctrine\ORM\Mapping AS ORM;
+
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of GCMRegID
+ *
+ * @author seshachalam
+ */
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="gcm_reg")
+ */
+class GCMRegID
+{
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="gcm_reg_ids")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *
+     */
+    private $user;
+    
+    /**
+     * @ORM\Column(type="text", nullable=false)
+     */
+    private $value;
+    
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $last_active;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Board", inversedBy="gcm_reg_ids")
+     * @ORM\JoinColumn(name="board_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
+     */
+    private $board;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Lollypop\GearBundle\Entity\User $user
+     *
+     * @return GCMRegID
+     */
+    public function setUser(\Lollypop\GearBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Lollypop\GearBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set value
+     *
+     * @param string $value
+     *
+     * @return GCMRegID
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get value
+     *
+     * @return string 
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Set last_active
+     *
+     * @param \DateTime $lastActive
+     * @return GCMRegID
+     */
+    public function setLastActive($lastActive)
+    {
+        $this->last_active = $lastActive;
+    
+        return $this;
+    }
+
+    /**
+     * Get last_active
+     *
+     * @return \DateTime 
+     */
+    public function getLastActive()
+    {
+        return $this->last_active;
+    }
+
+    /**
+     * Set board
+     *
+     * @param \Lollypop\GearBundle\Entity\Board $board
+     * @return GCMRegID
+     */
+    public function setBoard(\Lollypop\GearBundle\Entity\Board $board)
+    {
+        $this->board = $board;
+    
+        return $this;
+    }
+
+    /**
+     * Get board
+     *
+     * @return \Lollypop\GearBundle\Entity\Board 
+     */
+    public function getBoard()
+    {
+        return $this->board;
+    }
+}

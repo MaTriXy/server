@@ -1,0 +1,39 @@
+lollypop_gear_homepage:
+    path:     /
+    defaults: { _controller: LollypopGearBundle:Default:index }
+
+lollypop_gear_messages:
+    path:     /m/{hash}
+    defaults: { _controller: LollypopGearBundle:Default:getMessages }
+
+lollypop_gear_search.messages:
+    path:     /m/search/{board}
+    defaults: { _controller: LollypopGearBundle:Default:searchMessages }
+    
+lollypop_gear_push_messages:
+    path:     /push
+    defaults: { _controller: LollypopGearBundle:Default:push }
+    
+lollypop_gear_api_messages:
+    path:     /api/{board}/messages
+    defaults: { _controller: LollypopGearBundle:Api:getMessages }
+    methods:  [GET]
+
+lollypop_gear_api_messages_delta:
+    path:     /api/{board}/m_delta/{lastMessageUri}/{direction}
+    defaults: { _controller: LollypopGearBundle:Api:getMessagesDelta, lastMessageUri: 0, direction: 0 }
+    methods:  [GET]
+    
+lollypop_gear_api_comments:
+    path:     /api/{messageUri}/comments
+    defaults: { _controller: LollypopGearBundle:Api:getComments }
+    methods:  [GET]
+
+lollypop_gear_api_comments_delta:
+    path:     /api/{messageUri}/c_delta/{lastCommentUri}/{direction}
+    defaults: { _controller: LollypopGearBundle:Api:getCommentsDelta, lastCommentUri: 0, direction: 0 }
+    methods:  [GET]
+
+lollypop_gear_api_save_message_if_not_exists:
+    path:     /api/{messageUri}
+    defaults: { _controller: LollypopGearBundle}

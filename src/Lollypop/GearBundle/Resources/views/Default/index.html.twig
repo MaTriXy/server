@@ -1,0 +1,20 @@
+{% trans_default_domain "messages" %}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="one-half column">
+                {% image '@LollypopGearBundle/Resources/public/images/web_low_res_512.png' filter='jpegoptim' %}
+                <img class="u-max-full-width" src="{{ asset_url }}" alt="broadr logo">
+                {% endimage %}
+            </div>
+            <div class="one-half column"  style="margin-top: 5%">
+                <h1 class="hero-heading">Welcome to <a title="Broadr">Broadr</a></h1>
+                <p class="section-description">{{ "default_index_description" | trans }}</p>
+                <a class="button button-primary" href="{{ "app_download_url" | trans }}" title="Get Broadr App">Get Broadr</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

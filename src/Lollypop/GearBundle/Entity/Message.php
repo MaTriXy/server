@@ -1,0 +1,305 @@
+<?php
+
+namespace Lollypop\GearBundle\Entity;
+
+use Doctrine\ORM\Mapping AS ORM;
+
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of Message
+ *
+ * @author seshachalam
+ */
+
+/**
+ * @ORM\Entity(repositoryClass="Lollypop\GearBundle\Entity\Repository\MessageRepository")
+ * @ORM\Table(name="message", options={"collate"="utf8mb4_unicode_ci", "charset"="utf8mb4"})
+ */
+class Message implements \JsonSerializable {
+
+    const MAX_RESULTS = 10;
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="guid", nullable=false)
+     */
+    private $uri;
+
+    /**
+     * @ORM\Column(type="text", length=500, nullable=false)
+     */
+    private $content;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Board", inversedBy="messages")
+     * @ORM\JoinColumn(name="board_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     */
+    private $board;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="GCMRegID")
+     * @ORM\JoinColumn(name="gcm_reg_id", referencedColumnName="id", onDelete="CASCADE")
+     * 
+     */
+    private $gcm_reg;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $wieght;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Location")
+     * @ORM\JoinColumn(name="location_id", referencedColumnName="id", onDelete="CASCADE")
+     * 
+     */
+    private $location;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="message", cascade={"persist", "remove", "merge"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "DESC"})
+     * */
+    private $comments;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated_at;
+
+    public function __construct() {
+        $this->created_at = new \DateTime();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     *
+     * @return Message
+     */
+    public function setContent($content) {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string 
+     */
+    public function getContent() {
+        return $this->content;
+    }
+
+    /**
+     * Set wieght
+     *
+     * @param integer $wieght
+     * @return Message
+     */
+    public function setWieght($wieght) {
+        $this->wieght = $wieght;
+
+        return $this;
+    }
+
+    /**
+     * Get wieght
+     *
+     * @return integer 
+     */
+    public function getWieght() {
+        return $this->wieght;
+    }
+
+    /**
+     * Set created_at
+     *
+     * @param \DateTime $createdAt
+     * @return Message
+     */
+    public function setCreatedAt($createdAt) {
+        $this->created_at = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get created_at
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt() {
+        return $this->created_at;
+    }
+
+    /**
+     * Set updated_at
+     *
+     * @param \DateTime $updatedAt
+     * @return Message
+     */
+    public function setUpdatedAt($updatedAt) {
+        $this->updated_at = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updated_at
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt() {
+        return $this->updated_at;
+    }
+
+    /**
+     * Set uri
+     *
+     * @param string $uri
+     * @return Message
+     */
+    public function setUri($uri) {
+        $this->uri = $uri;
+
+        return $this;
+    }
+
+    /**
+     * Get uri
+     *
+     * @return string 
+     */
+    public function getUri() {
+        return $this->uri;
+    }
+
+    /**
+     * Set board
+     *
+     * @param \Lollypop\GearBundle\Entity\Board $board
+     * @return Message
+     */
+    public function setBoard(\Lollypop\GearBundle\Entity\Board $board) {
+        $this->board = $board;
+
+        return $this;
+    }
+
+    /**
+     * Get board
+     *
+     * @return \Lollypop\GearBundle\Entity\Board 
+     */
+    public function getBoard() {
+        return $this->board;
+    }
+
+    /**
+     * Set gcm_reg
+     *
+     * @param \Lollypop\GearBundle\Entity\GCMRegID $gcmReg
+     * @return Message
+     */
+    public function setGcmReg(\Lollypop\GearBundle\Entity\GCMRegID $gcmReg = null) {
+        $this->gcm_reg = $gcmReg;
+
+        return $this;
+    }
+
+    /**
+     * Get gcm_reg
+     *
+     * @return \Lollypop\GearBundle\Entity\GCMRegID 
+     */
+    public function getGcmReg() {
+        return $this->gcm_reg;
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \Lollypop\GearBundle\Entity\Comment $comments
+     * @return Message
+     */
+    public function addComment(\Lollypop\GearBundle\Entity\Comment $comments) {
+        $this->comments[] = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Lollypop\GearBundle\Entity\Comment $comments
+     */
+    public function removeComment(\Lollypop\GearBundle\Entity\Comment $comments) {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments() {
+        return $this->comments;
+    }
+
+    public function jsonSerialize() {
+        return array('uuid' => $this->uri, 'c' => $this->content, 'g' => $this->getLocation() === null ? null : $this->getLocation()->getGeoHash(), 'w' => $this->wieght, 'ha' => $this->created_at->format(\DateTime
+                    ::ISO8601), 'a' => $this->location === null ? null : $this->getLocation()->getAddress(), 's' => 4);
+    }
+
+    /**
+     * Set location
+     *
+     * @param \Lollypop\GearBundle\Entity\Location $location
+     * @return Message
+     */
+    public function setLocation(\Lollypop\GearBundle\Entity\Location $location = null) {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return \Lollypop\GearBundle\Entity\Location 
+     */
+    public function getLocation() {
+        return $this->location;
+    }
+
+    public function getCreatedDateInRssFormat() {
+        return $this->created_at->format(\DateTime::RSS);
+    }
+
+}

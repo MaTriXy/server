@@ -1,0 +1,43 @@
+{% trans_default_domain "messages" %}
+
+<meta charset="utf-8">
+<meta name="description" content="{{ "default_index_description" | trans }}">
+<meta name="keywords" content="Broadr App,Broadr android app,Broadcast,realtime,anonymous,broadr.in,Broadr,App,VirtualNoticeBoard,VirtualMessageBoard,NoticeBoard,MessageBoard,Virtual,IN,.in,Android,Application,Realtime,LocationBased,Messaging">
+<meta name="author" content="Seshachalam Malisetti">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<title>
+    {% block title %}Welcome | {{ "name" | trans }} - {{ "tag" | trans }} {% endblock %}
+</title>
+
+<link href='http://fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+{% block stylesheets %}
+    {% stylesheets "bundles/lollypopgear/css/*" filter='uglifycss' filter="cssrewrite" %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block favicon %}
+    {% image "@LollypopGearBundle/Resources/public/images/ic_launcher.png" %}
+    <link rel="icon" type="image/x-icon" href="{{ asset_url }}" />
+    {% endimage %}
+{% endblock %}
+
+</head>
+
+<body>
+    {% block body %}        
+    {% endblock %}
+    
+    {% block footer %}
+        {% include 'footer.html.twig' %}
+    {% endblock %}
+    
+    {% block javascripts %}
+        {% javascripts '@LollypopGearBundle/Resources/public/js/ga.js' filter='uglifyjs2' %}
+            <script type="text/javascript" async src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock %}
+</body>
+
+</html>

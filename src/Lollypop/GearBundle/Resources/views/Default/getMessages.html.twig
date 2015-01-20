@@ -1,0 +1,32 @@
+{% trans_default_domain "messages" %}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Message | {{ "name" | trans }} - {{ "tag" | trans }}
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row" style="margin-top: 5%">
+            <div class="one">
+                <h4 class="hero-heading">{{ content.message.content }}</h4>
+                <p>{{ content.message.getCreatedDateInRssFormat }} | {% if content.message.location.address is empty %} <a href="{{ content.message.location.getLocationLink }}">Place</a> {% else %} <a href="{{ content.message.location.getLocationLink }}">{{ content.message.location.address }}</a> {% endif %}</p>
+                <p><b>Total comments</b>: {{ content.pagination.getTotalItemCount }}</p>
+                <table class="u-full-width">
+                    {% for comment in content.pagination %}
+                        {#{% if loop.index is odd %}class="color"{% endif %}#}
+                        <tr>
+                            <td>
+                                <p>{{ comment.content }}</p>
+                                <p>{{ comment.getCreatedDateInRssFormat }} | {% if comment.location.address is empty %} <a href="{{ content.message.location.getLocationLink }}">Unknown place</a> {% else %} <a href=""{{ content.message.location.getLocationLink }}>{{ comment.location.address }}</a> {% endif %}</p>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <div class="navigation">
+                    {{ knp_pagination_render(content.pagination) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
